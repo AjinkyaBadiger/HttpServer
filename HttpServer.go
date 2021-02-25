@@ -17,9 +17,19 @@ func (hh HttpHandler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-       // create a new handler
-       handler := HttpHandler{}
 
-       // listen and serve
-       http.ListenAndServe(":9000", handler)
+       //Create a new 'ServeMux'	
+       mux := http.NewServeMux()
+
+       // handle '/' route
+       mux.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
+	       fmt.Fprint(res, "Hello World!\n")
+       })
+
+       //handle '/hello/golang' route
+       mux.HandleFunc("/hello/golang", func(res http.ResponseWriter, req *http.Request) {
+	       fmt.Fprint(res, "Hello Golang!\n")
+       })
+       // listen and serve using 'ServeMux'
+       http.ListenAndServe(":9000", mux)
 }
