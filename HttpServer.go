@@ -1,9 +1,10 @@
 package main
 
 import (
+	"log"
 	"fmt"
 	"net/http"
-	//"io"
+	"github.com/rocketlaunchr/https-go"
 )
 
 
@@ -28,6 +29,10 @@ func main() {
        http.HandleFunc("/hello/golang", func(res http.ResponseWriter, req *http.Request) {
 	       fmt.Fprint(res, "Hello Golang!\n")
        })
+
+       httpServer, _ := https.Server("8080", https.GenerateOptions{Host: "thecucumber.app"})
+       log.Fatal(httpServer.ListenAndServeTLS("", ""))
+
        // listen and serve using 'http.DefaultServeMux'
-       http.ListenAndServe(":9000", nil)
+       //http.ListenAndServe(":9000", nil)
 }
